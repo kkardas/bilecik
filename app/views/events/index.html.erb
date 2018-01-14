@@ -1,0 +1,110 @@
+<div class="container">
+  <h5>Lista nadchodzących wydarzeń:</h5>
+  <% flash.each do |key, value| %>
+    <div class="alert alert-<%= key %>" style="margin: auto; margin-bottom: 5px">
+      <%= value %>
+    </div>
+  <% end %>
+
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Filtrowanie po dacie</h5>
+      <hr>
+
+      <%= form_tag(events_path, :method => :get) do%>
+        <div class="form-group" style="display: inline-block;">
+          <div class="col-lg-4">
+            <%= date_field_tag :start_date, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="form-group" style="display: inline-block;">
+
+          <div class="col-lg-4">
+            <%= date_field_tag :end_date, class: "form-control" %>
+          </div>
+        </div>
+        <p class="form-group" style="display: inline-block;">
+          <%= submit_tag("Filtruj", :class => "btn btn-success") %>
+        </p>
+
+      <% end %>
+    </div>
+  </div>
+
+  <% @events.each do |event| %>
+    <div class="card" style="margin-top: 10px;">
+      <h5 class="card-header">
+        <%= event.name %>
+      </h5>
+      <div class="card-body">
+        <p class="card-text">
+        <div class="row">
+          <div class="col-lg-4">
+            <img src=<%= "#{event.image}" %> alt="" style="max-height: 300px; max-width: 300px;">
+          </div>
+          <div class="col-lg-8">
+            <table class="table">
+              <tbody>
+              <tr>
+                <td>Opis:</td>
+                <td><%= event.description %></td>
+              </tr>
+              <tr>
+                <td>Data:</td>
+                <td><%= event.date %></td>
+              </tr>
+              <tr>
+                <td>Cena biletu:</td>
+                <% if(event.date - Date.today == 0) %>
+                  <td><%= event.price.to_f * 1.2 %></td>
+                <% else %>
+                  <td><%= event.price %></td>
+              <% end %>
+              </tr>
+              <tr>
+                <td>Ilość miejsc</td>
+                <td><%= event.size %></td>
+              </tr>
+              <tr>
+                <td>Ilość wolnych miejsc</td>
+                <td><%= event.size - event.tickets.count %></td>
+              </tr>
+              <tr>
+                <td>Tylko dla pełnoletnich</td>
+                <td>
+                  <% if(event.adult_only) %>
+                    <%= "tak" %>
+                  <% else %>
+                    <%= "nie" %>
+                  <% end %>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div style="text-align: right; width: 100%">
+          <div class="row">
+            <div class="col-lg-12" style="text-align: left">
+              <%= link_to 'Szczegóły', event_path(event), class:"btn btn-primary", style: "display: inline-block; float: right" %>
+              <% if session[:admin] == true %>
+                <p>
+                  <%= button_to "Usuń wydarzenie", event, :method=>:delete, class: "btn btn-danger", style: "display: inline-block" %>
+                </p>
+                <p>
+                  <%= link_to "Edytuj", edit_event_path(event), class:"btn btn-primary", style: "display: inline-block" %>
+                </p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12" style="margin-top: 50px;">
+          <% if event.date - Date.today <= 30 %>
+              <%= render "events/new_ticket", :event => event, :user_id=>session[:user_id] %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

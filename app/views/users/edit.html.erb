@@ -1,0 +1,29 @@
+<% flash.each do |key, value| %>
+  <div class="alert alert-danger" style="width: 80%; margin: auto;">
+    <%= value %>
+  </div>
+<% end %>
+
+<div class="card" style="width: 80%; margin: auto;">
+  <div class="card-body">
+    <h5 class="card-title">Wpisz o ile chcesz doładować konto</h5>
+    <hr>
+
+    <%= form_tag(:action => 'add_money') do%>
+      <%= (hidden_field_tag :id, session[:user_id]) %>
+
+      <div class="form-group row">
+        <div class="col-lg-2">
+          Kwota doładowania:
+        </div>
+        <div class="col-lg-10">
+          <%= text_field_tag(:money, nil, class: "form-control") %>
+        </div>
+      </div>
+      <p>
+        <%= submit_tag("Doładuj", :class => "btn btn-success") %>
+      </p>
+
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" href="/" style="margin-left: 10%">Bilety</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+          aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+
+  <% if(session[:user_id]) %>
+    <p class="nav navbar-nav navbar-right" id="Logowanie" style="margin-left: 1%">
+      <%= link_to 'Wyloguj', session_logout_path, class: "btn-lg btn-secondary" %>
+    </p>
+    <p class="nav navbar-nav navbar-right" id="Logowanie" style="margin-left: 1%">
+      <%= link_to 'Doładuj konto', edit_user_path(session[:user_id]), class: "btn-lg btn-secondary" %>
+    </p>
+    <p class="nav navbar-nav navbar-right" id="Logowanie" style="margin-left: 1%">
+      <%= link_to 'Moje bilety', tickets_path, class: "btn-lg btn-secondary" %>
+    </p>
+    <div class="cell-row" style="margin-left: 1%">
+      <div class="cell cell-middle" style="color: white; text-align: right">
+        Jesteś zalogowany jako <%= User.find(session[:user_id])[:name] %>, stan konta: <%= User.find(session[:user_id])[:money] %>
+      </div>
+    </div>
+<% else %>
+    <p class="nav navbar-nav navbar-right" id="Rejestracja" style="margin-left: 1%">
+      <%= link_to 'Rejestracja', new_user_path, class: "btn-lg btn-secondary" %>
+    </p>
+    <p class="nav navbar-nav navbar-right" id="Logowanie" style="margin-left: 1%">
+      <%= link_to 'Logowanie', session_login_path, class: "btn-lg btn-secondary" %>
+    </p>
+  <% end %>
+  <% if session[:admin] %>
+    <p class="nav navbar-nav navbar-right" id="Zwroty" style="margin-left: 1%">
+      <%= link_to 'Bilety do zwrotu', to_return_tickets_path, class: "btn-lg btn-secondary" %>
+    </p>
+  <% end %>
+</nav>

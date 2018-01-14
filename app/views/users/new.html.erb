@@ -1,0 +1,58 @@
+<div class="card" style="width: 80%; margin: auto;">
+  <div class="card-body">
+    <h5 class="card-title">Formularz rejestracji:</h5>
+    <hr>
+
+    <%= form_with scope: :user, url: users_path, local: true do |form| %>
+
+      <div class="form-group row">
+        <div class="col-lg-2">
+          <%= form.label :'Nazwa użytkownika' %><br>
+        </div>
+        <div class="col-lg-10">
+          <%= form.text_field :name, class: "form-control" %>
+          <% if !@user.errors.full_messages_for(:name).blank? %>
+            <div class="alert alert-danger">
+              <%= @user.errors.full_messages_for(:name).first %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-lg-2">
+          <%= form.label :Hasło %><br>
+        </div>
+        <div class="col-lg-10">
+          <%= form.password_field :password, class: "form-control" %>
+          <% if !@user.errors.full_messages_for(:password).blank? %>
+            <div class="alert alert-danger">
+              <%= @user.errors.full_messages_for(:password).first %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-lg-2">
+          <%= form.label :'Data urodzenia' %><br>
+        </div>
+        <div class="col-lg-10">
+          <%= form.date_field :birth, class: "form-control" %>
+          <% if !@user.errors.full_messages_for(:birth).blank? %>
+            <div class="alert alert-danger">
+              <%= @user.errors.full_messages_for(:birth).first %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <p>
+        <%= form.submit "Zarejestruj", class: "btn btn-success"%>
+      </p>
+    <% end %>
+
+
+
+  </div>
+</div>

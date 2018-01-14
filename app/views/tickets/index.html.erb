@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+
+<div style="width: 80%; margin: auto; background-color: white; border-radius: 5px;">
+  <h5>Twoje bilety:</h5>
+  <hr>
+
+  <table class="table table-bordered">
+
+    <thead>
+
+      <tr>
+        <th>Cena</th>
+        <th>Data wydarzenia</th>
+        <th>Wydarzenie</th>
+        <th>Zwrot</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @tickets.each do |ticket| %>
+        <tr>
+          <td><%= ticket.price %></td>
+          <td><%= ticket.event.date %></td>
+          <td>
+            <%= link_to ticket.event.name, event_path(ticket.event), style: "display: inline" %>
+          </td>
+          <td>
+            <% if ticket.to_return != 0 %>
+              <%= button_to 'Cofnij zwrot', undo_return_ticket_path(id: ticket.id), :method => :put, class: "btn btn-info" %>
+            <% else %>
+              <%= button_to 'Zwróć', do_return_ticket_path(id: ticket.id), :method => :put, class: "btn btn-info" %>
+          <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,23 @@
+<% flash.each do |key, value| %>
+  <div class="alert alert-<%= key %>" style="margin: auto; margin-bottom: 5px; width: 80%;">
+    <%= value %>
+  </div>
+<% end %>
+<div class="jumbotron" style="margin: auto; width: 80%">
+  <div class="container">
+    <h1 class="display-3">
+      <%= "#{@title}" %>
+    </h1>
+    <p>
+      <%= "#{@description}" %>
+    </p>
+    <hr>
+    <div style="text-align: center">
+      <% if session[:admin] %>
+        <%= link_to 'Dodaj nowe wydarzenie', new_event_path, class: "btn btn-lg btn-success" %>
+      <% end %>
+      <%= link_to 'Przeglądaj wydarzenia', events_path, class: "btn btn-lg btn-primary" %>
+    </div>
+  </div>
+</div>
+

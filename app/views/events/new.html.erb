@@ -1,0 +1,107 @@
+<div class="card" style="width: 80%; margin: auto">
+  <div class="card-body">
+    <h5 class="card-title">W celu utworzenia wydarzenia, wypełnij poniższy formularz:</h5>
+    <hr>
+
+    <%= form_with scope: :event, url: events_path, local: true do |form| %>
+
+      <div class="form-group row">
+        <div class="col-lg-2">
+          <%= form.label :Nazwa %><br>
+        </div>
+        <div class="col-lg-10">
+          <%= form.text_field :name, class: "form-control" %>
+          <% if !@event.errors.full_messages_for(:name).blank? %>
+            <div class="alert alert-danger">
+              <%= @event.errors.full_messages_for(:name).first %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-lg-2">
+          <%= form.label :Opis %><br>
+        </div>
+        <div class="col-lg-10">
+          <%= form.text_area :description, class: "form-control" %>
+          <% if !@event.errors.full_messages_for(:description).blank? %>
+            <div class="alert alert-danger">
+              <%= @event.errors.full_messages_for(:description).first %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-lg-2">
+          <%= form.label :'Cena biletu' %><br>
+        </div>
+        <div class="col-lg-10">
+          <%= form.number_field :price, class: "form-control" %>
+          <% if !@event.errors.full_messages_for(:price).blank? %>
+            <div class="alert alert-danger">
+              <%= @event.errors.full_messages_for(:price).first %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-lg-2">
+          <%= form.label :Data %><br>
+        </div>
+        <div class="col-lg-10">
+          <%= form.date_field :date, class: "form-control" %>
+          <% if !@event.errors.full_messages_for(:date).blank? %>
+            <div class="alert alert-danger">
+              <%= @event.errors.full_messages_for(:date).first %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-lg-2">
+          <%= form.label :'Ilość miejsc' %><br>
+        </div>
+        <div class="col-lg-10">
+          <%= form.number_field :size, class: "form-control" %>
+          <% if !@event.errors.full_messages_for(:size).blank? %>
+            <div class="alert alert-danger">
+              <%= @event.errors.full_messages_for(:size).first %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-lg-2">
+          <%= form.label :'Tylko dla dorosłych' %><br>
+        </div>
+        <div class="col-lg-10">
+          <%= form.check_box :adult_only %>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-lg-2">
+          <%= form.label :Zdjęcie %><br>
+        </div>
+        <div class="col-lg-10">
+          <%= form.text_field :image, class: "form-control" %>
+          <% if !@event.errors.full_messages_for(:image).blank? %>
+            <div class="alert alert-danger">
+              <%= @event.errors.full_messages_for(:image).first %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <p>
+        <%= form.submit :Dodaj, class: "btn btn-success"%>
+      </p>
+
+  <% end %>
+  </div>
+</div>

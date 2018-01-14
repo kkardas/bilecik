@@ -1,0 +1,30 @@
+<div class="card" style="width: 100%;">
+  <div class="card-body">
+    <h5 class="card-title">Wpisz ile biletów chcesz kupic (maksymalnie 5):</h5>
+    <hr>
+
+    <%= form_with scope: :ticket, url: tickets_path, local: true do |form| %>
+
+      <div class="form-group row">
+        <div class="col-lg-2">
+          <%= form.label :'Ilość biletów:' %><br>
+        </div>
+        <div class="col-lg-10">
+          <%= form.text_field :amount, class: "form-control" %>
+        </div>
+      </div>
+
+      <%= form.hidden_field :price, value: event.price %>
+      <%= form.hidden_field :to_return, value: 0.0 %>
+      <%= form.hidden_field :user_id, value: user_id %>
+      <%= form.hidden_field :event_id, value: event.id %>
+      <p>
+        <% if session[:user_id] %>
+          <%= form.submit :Kup, class: "btn btn-success" %>
+        <% else %>
+          <%= link_to 'Kup', session_login_path(:danger => "Kup"), class: "btn btn-success" %>
+      <% end %>
+      </p>
+    <% end %>
+  </div>
+</div>

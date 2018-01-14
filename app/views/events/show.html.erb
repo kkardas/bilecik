@@ -1,0 +1,50 @@
+<% flash.each do |key, value| %>
+  <div class="alert alert-<%= key %>" style="margin: auto; margin-bottom: 5px; width: 80%;">
+    <%= value %>
+  </div>
+<% end %>
+<div class="card" style="width: 80%; margin: auto;">
+  <div class="card-header">
+    <%=	"#{@event.name}" %>
+  </div>
+  <img class="card-img-top" style="width: 50%; margin: auto;" src=<%= "#{@event.image}" %>>
+  <div class="card-body">
+    <p class="card-text">
+    <table class="table">
+      <tbody>
+      <tr>
+        <td>Opis:</td>
+        <td><%= @event.description %></td>
+      </tr>
+      <tr>
+        <td>Data:</td>
+        <td><%= @event.date %></td>
+      </tr>
+      <tr>
+        <td>Cena biletu:</td>
+        <td><%= @event.price %></td>
+      </tr>
+      <tr>
+        <td>Wykupione miejsca</td>
+        <td>
+          <%= @event.tickets.count %>
+        </td>
+      </tr>
+      <tr>
+        <td>Tylko dla pełnoletnich</td>
+        <td>
+          <% if(@event.adult_only) %>
+            <%= "tak" %>
+          <% else %>
+            <%= "nie" %>
+          <% end %>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<% if session[:admin] %>
+  <%= render "events/tickets_list", tickets: Ticket.where(event_id: @event.id) %>
+<% end %>

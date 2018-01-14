@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+
+<div style="width: 80%; margin: auto; background-color: white; border-radius: 5px;">
+  <h5>Zakupione bilety:</h5>
+  <hr>
+
+  <table class="table table-bordered">
+
+    <thead>
+
+    <tr>
+      <th>Cena</th>
+      <th>Status</th>
+      <th>Użytkownik</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% tickets.each do |ticket| %>
+      <tr>
+        <td><%= ticket.price %></td>
+        <td>
+          <% if ticket.to_return > 0.0 %>
+            czeka na zwrot
+          <% else %>
+            zakupiony
+          <% end %>
+        </td>
+        <td>
+          <%= ticket.user.name %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

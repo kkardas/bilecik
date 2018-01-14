@@ -1,0 +1,1 @@
+<%= render "events/tickets_list", tickets: Ticket.where(user_id: session[:user_id]) %>
