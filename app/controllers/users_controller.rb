@@ -38,6 +38,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @user.money = 0
     @user.admin = false
+    @user.password = Digest::SHA1.hexdigest(user_params[:password])
     respond_to do |format|
       if @user.save
         flash[:success] = 'Poprawnie zarejestrowano'
@@ -46,6 +47,7 @@ class UsersController < ApplicationController
         format.html { redirect_to root_path }
         format.json { render :show, status: :created, location: @user }
       else
+        p @user.errors
         format.html { render :new }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end

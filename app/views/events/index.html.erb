@@ -100,7 +100,7 @@
           </div>
         </div>
         <div class="col-lg-12" style="margin-top: 50px;">
-          <% if event.date - Date.today <= 30 %>
+          <% if event.date - Date.today <= 30 && event.date - Date.today >= 0 %>
               <%= render "events/new_ticket", :event => event, :user_id=>session[:user_id] %>
           <% end %>
         </div>

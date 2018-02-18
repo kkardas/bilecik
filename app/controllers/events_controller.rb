@@ -9,11 +9,27 @@ class EventsController < ApplicationController
         flash[:danger] = "Data końcowa musi być późniejsza niż początkowa"
         @events = Event.all
       elsif params[:start_date] == ""
-        @events = Event.where("date <= ?", params[:end_date].to_date)
+        if !session[:admin]
+          @events = Event.where(:date => Date.today().to_s..params[:end_date])
+        else
+          @events = Event.where("date <= ?", params[:end_date].to_date)
+        end
       elsif params[:end_date] == ""
-        @events = Event.where("date >= ?", params[:start_date].to_date)
+        if params[:start_date].to_date < Date.today() && !session[:admin]
+          @events = Event.where("date >= ?", Date.today())
+        else
+          @events = Event.where("date >= ?", params[:start_date].to_date)
+        end
       else
-        @events = Event.where(:date => params[:start_date]..params[:end_date])
+        if session[:admin]
+          @events = Event.where(:date => params[:start_date]..params[:end_date])
+        else
+          if params[:start_date].to_date < Date.today
+            @events = Event.where(:date => Date.today().to_s..params[:end_date])
+          else
+            @events = Event.where(:date => params[:start_date]..params[:end_date])
+          end
+        end
       end
     elsif session[:admin]
       @events = Event.all

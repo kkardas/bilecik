@@ -30,4 +30,18 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes:
+      user:
+        name: "Nazwa użytkownika"
+        birth: "Data urodzenia"
+  activerecord:
+    attributes:
+      event:
+        name: "Nazwa"
+        money: "Kwota"
+        description: "Opis"
+        price: "Cena"
+        date: "Data"
+        image: "Obraz"
+        size: "Ilość miejsc"

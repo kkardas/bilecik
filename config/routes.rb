@@ -21,7 +21,6 @@ Rails.application.routes.draw do
   end
 
   get 'session/login'
-  get 'session/login_attempt'
   get 'session/logout'
   post 'session/login_attempt'
   get 'users/tickets'

@@ -7,7 +7,7 @@ class User < ApplicationRecord
   validates_presence_of :name, :password, :birth, :message => "nie może pozostać puste"
   validates_uniqueness_of :name, :message => "Podany login już jest w bazie danych"
   validate :birth_date_cannot_be_in_the_past
-  validates_numericality_of  :money, :greater_than => 0, :message => "musi być większy od zera"
+  validates_numericality_of  :money, :greater_than_or_equal_to => 0, :message => "musi być większy od zera"
 
   def birth_date_cannot_be_in_the_past
     errors.add(:birth, "nie może być z przyszłości") if
@@ -15,9 +15,7 @@ class User < ApplicationRecord
   end
 
   def encrypt_password
-    if password.present?
-      self.password = Digest::SHA1.hexdigest(password)
-    end
+
   end
 
   def clear_password
